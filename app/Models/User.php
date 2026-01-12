@@ -47,6 +47,7 @@ class User extends Authenticatable
             'password' => 'hashed',
             'latitude' => 'decimal:8',
             'longitude' => 'decimal:8',
+            'phone_verified' => 'boolean'
         ];
     }
 
