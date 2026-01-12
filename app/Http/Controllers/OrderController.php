@@ -6,13 +6,14 @@ use App\Models\Grocery;
 use App\Models\Order;
 use App\Models\OrderItem;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
 class OrderController extends Controller
 {
     public function store(Request $request)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'items' => 'required|array',
             'items.*.grocery_id' => 'required|exists:groceries,id',
             'items.*.quantity' => 'required|integer|min:1',
@@ -21,6 +22,11 @@ class OrderController extends Controller
             'delivery_longitude' => 'nullable|numeric',
             'notes' => 'nullable|string'
         ]);
+
+        if ($validator->fails()) {
+            info($validator->messages()->toArray());
+            return response()->json($validator->messages(), 400);
+        }
 
         $user = $request->user();
         $totalAmount = 0;
