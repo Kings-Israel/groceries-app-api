@@ -24,7 +24,6 @@ class OrderController extends Controller
         ]);
 
         if ($validator->fails()) {
-            info($validator->messages()->toArray());
             return response()->json($validator->messages(), 400);
         }
 
@@ -78,7 +77,7 @@ class OrderController extends Controller
     public function show($id)
     {
         $order = Order::with('items.grocery')->findOrFail($id);
-
+        info($order);
         if ($order->user_id !== auth()->id()) {
             return response()->json(['message' => 'Unauthorized'], 403);
         }
