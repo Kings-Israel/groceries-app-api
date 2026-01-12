@@ -49,7 +49,8 @@ class OrderController extends Controller
             'delivery_location' => $request->delivery_location,
             'delivery_latitude' => $request->delivery_latitude,
             'delivery_longitude' => $request->delivery_longitude,
-            'notes' => $request->notes
+            'notes' => $request->notes,
+            'status' => 'pending'
         ]);
 
         // Create order items and update stock
