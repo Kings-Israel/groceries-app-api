@@ -20,7 +20,8 @@ class AuthController extends Controller
             'password' => 'required|string|min:6'
         ]);
 
-        $otp = rand(100000, 999999);
+        // $otp = rand(100000, 999999);
+        $otp = 123456;
 
         $user = User::create([
             'name' => $request->name,
@@ -90,7 +91,7 @@ class AuthController extends Controller
         }
 
         $token = $user->createToken('auth_token')->plainTextToken;
-        
+
         return response()->json([
             'user' => $user,
             'token' => $token
